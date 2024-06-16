@@ -28,6 +28,14 @@ class _LineAnimationState extends State<LineAnimation>
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _animation.addStatusListener((status) {
+
+      // when the line is fully expanded, the begin value is set to height of the line 
+      // and the end value is set to 0. 
+      //
+      //When the line is fully collapsed, the begin value is set to 0. 
+      //
+      // also the alignment is to be changed for smooth expand and squeeze animation. 
+
       if (status == AnimationStatus.completed) {
         _animation = Tween<double>(
                 begin: isExpanded ? endValue : 0,
@@ -46,7 +54,7 @@ class _LineAnimationState extends State<LineAnimation>
           ..forward();
       }
     });
-    // Start the animation with a 500ms delay
+    // Start the animation with specified delay
     Future.delayed(widget.delayDuration, () {
       _controller
         ..reset()
@@ -65,7 +73,6 @@ class _LineAnimationState extends State<LineAnimation>
   @override
   Widget build(BuildContext context) {
     
-
     return Center(
       child: SizedBox(
         height: endValue,
